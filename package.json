@@ -1,0 +1,9 @@
+{
+  "name": "remiew-label-review-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local, standalone version of the Remiew by Cactus label review prototype. Runs with mock AI data — no API key or backend required yet.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

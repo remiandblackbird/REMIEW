@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Remiew by Cactus — Label Review</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="shell">
+
+  <aside class="sidebar">
+    <div class="brand" style="font-size:17px; line-height:1.25;">Remiew <span style="opacity:0.55; font-weight:500;">by Cactus</span></div>
+    <div class="brand-tag">Food &amp; Beverage</div>
+    <div class="module-list">
+      <div class="module-item active" data-view="view-label">
+        <span>Label Review</span>
+        <span class="module-tag">LIVE</span>
+      </div>
+      <div class="module-item" data-view="view-nip">
+        <span>NIP Calculator</span>
+        <span class="module-tag">LIVE</span>
+      </div>
+      <div class="module-item sub" data-view="view-claims">
+        <span>Claims Review</span>
+        <span class="module-tag">LIVE</span>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      v0.1 prototype<br>Australia only, Standard 1.2.x knowledge base
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="main-inner">
+    <div id="view-label">
+    <div id="uploadStage">
+      <div class="eyebrow">Module 01 — Label Review</div>
+      <h1>Upload a label. Get a structured review before it reaches shelf.</h1>
+      <p class="subtext">This is a preliminary, AI-assisted screening tool. It does not replace sign-off from a qualified QA or regulatory professional.</p>
+
+      <div class="upload-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*">
+        <div class="upload-icon">↑</div>
+        <div class="upload-title">Drop a label image, or click to browse</div>
+        <div class="upload-sub">JPG or PNG · artwork or a clear photo both work</div>
+      </div>
+
+      <div class="preview-card" id="previewCard">
+        <div class="preview-row">
+          <img id="previewThumb" class="preview-thumb" alt="Label preview">
+          <div class="preview-meta">
+            <div class="preview-name" id="previewName"></div>
+            <div class="field-row">
+              <div class="field">
+                <label>Category</label>
+                <select id="categorySelect">
+                  <option>Beverage — general</option>
+                  <option>Beverage — formulated caffeinated</option>
+                  <option>Snack / confectionery</option>
+                  <option>Dairy / dairy alternative</option>
+                  <option>Sauce / condiment</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Market</label>
+                <select id="marketSelect">
+                  <option>Australia</option>
+                  <option>New Zealand</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" id="runBtn">Run review</button>
+          <button class="btn btn-ghost" id="clearBtn">Choose different file</button>
+        </div>
+      </div>
+
+      <div class="processing" id="processing">
+        <div class="proc-step" data-step="0"><span class="proc-dot"></span>Extracting label content</div>
+        <div class="proc-step" data-step="1"><span class="proc-dot"></span>Structuring ingredient &amp; nutrition data</div>
+        <div class="proc-step" data-step="2"><span class="proc-dot"></span>Checking against Food Standards Code</div>
+        <div class="proc-step" data-step="3"><span class="proc-dot"></span>Compiling report</div>
+      </div>
+
+      <div class="error-box" id="errorBox"></div>
+    </div>
+
+    <div class="report" id="reportStage">
+      <div class="eyebrow">Module 01 — Label Review</div>
+      <h1 id="reportTitle" style="font-size:26px;">Review report</h1>
+      <div class="disclaimer">This is a preliminary AI-assisted review and does not replace professional regulatory verification. Findings should be confirmed by a qualified QA or regulatory professional before the label is finalised.</div>
+
+      <div class="report-section">
+        <div class="section-head" style="color:var(--critical);">Critical issues <span class="count" id="criticalCount">0</span></div>
+        <div id="criticalList"></div>
+      </div>
+      <div class="report-section">
+        <div class="section-head" style="color:var(--warning);">Warnings <span class="count" id="warningCount">0</span></div>
+        <div id="warningList"></div>
+      </div>
+      <div class="report-section">
+        <div class="section-head" style="color:var(--pass);">Suggestions <span class="count" id="suggestionCount">0</span></div>
+        <div id="suggestionList"></div>
+      </div>
+      <div class="report-section">
+        <div class="section-head">Missing / not visible <span class="count" id="missingCount">0</span></div>
+        <div id="missingList"></div>
+      </div>
+
+      <div class="report-actions">
+        <button class="btn btn-primary" id="downloadBtn">Download report</button>
+        <button class="btn btn-ghost" id="newReviewBtn">Start new review</button>
+      </div>
+    </div>
+    </div>
+
+    <div id="view-nip" style="display:none;">
+      <div class="eyebrow">Module 02 — NIP Calculator</div>
+      <h1>Turn ingredient specs into a draft Nutrition Information Panel.</h1>
+      <p class="subtext">Enter each ingredient's quantity in the recipe and its nutrient values from its spec/PIF — or upload the spec and let AI pull the numbers out for you.</p>
+
+      <div class="nip-disclaimer">⚠ This produces a <strong>calculated estimate</strong> based on the ingredient data you provide. It is not a substitute for FSANZ's Nutrition Panel Calculator or lab analysis — and if the finished product will carry a nutrient content claim (e.g. "low fat", "high protein", "source of fibre"), those thresholds should be confirmed against verified data, not a calculated estimate alone.</div>
+
+      <div class="upload-zone" id="nipDropZone" style="padding:26px; margin-bottom:20px;">
+        <input type="file" id="nipBatchInput" accept="image/*,.pdf" multiple style="display:none;">
+        <div class="upload-icon" style="width:30px;height:30px;margin-bottom:10px;">↑</div>
+        <div class="upload-title">Drag in a flavour/ingredient spec or NIP — we'll add it as a row automatically</div>
+        <div class="upload-sub">PDF or image · drop multiple files at once · you'll still need to enter the quantity used in your recipe</div>
+      </div>
+      <div id="nipDropStatus" style="display:none; font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); margin:-8px 0 16px;"></div>
+
+      <div style="overflow-x:auto; max-width:100%; border-radius:8px;">
+      <table class="ing-table" id="ingTable">
+        <thead>
+          <tr>
+            <th style="width:16%">Ingredient</th>
+            <th style="width:9%">Qty in recipe (g)</th>
+            <th>Energy (kJ/100g)</th>
+            <th>Protein (g/100g)</th>
+            <th>Fat, total (g/100g)</th>
+            <th>— saturated (g/100g)</th>
+            <th>Carb, total (g/100g)</th>
+            <th>— sugars (g/100g)</th>
+            <th>Sodium (mg/100g)</th>
+            <th style="width:70px"></th>
+          </tr>
+        </thead>
+        <tbody id="ingBody"></tbody>
+      </table>
+      </div>
+      <button class="btn btn-ghost" id="addIngBtn">+ Add ingredient</button>
+      <input type="file" id="specFileInput" accept="image/*,.pdf" style="display:none;">
+
+      <div class="batch-row">
+        <div class="field">
+          <label>Final product yield (g) — after cooking / processing loss or gain</label>
+          <input type="number" id="yieldWeight" placeholder="Auto-filled from ingredient total, editable">
+        </div>
+        <div class="field">
+          <label>Serving size (g)</label>
+          <input type="number" id="servingSize" placeholder="e.g. 30">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="calcNipBtn">Calculate NIP</button>
+      </div>
+
+      <div class="error-box" id="nipErrorBox"></div>
+
+      <div class="nip-output" id="nipOutput">
+        <div class="nip-head">NUTRITION INFORMATION</div>
+        <table class="nip-table">
+          <thead>
+            <tr><th>Servings per package: —</th><th id="colServing">Per Serving</th><th id="col100">Per 100g</th></tr>
+          </thead>
+          <tbody id="nipBody"></tbody>
+        </table>
+      </div>
+
+      <div class="report-section" style="margin-top:30px;">
+        <div class="section-head">Ingredient declaration</div>
+        <p class="subtext" style="margin-bottom:14px; font-size:13px;">Built from the same ingredient rows above, sorted by quantity — highest first, as the Code requires. Multiple flavour ingredients are automatically merged into one "Natural Flavour" / "Flavour" entry. Every line below is editable — fix wording, retag allergens, reorder, or add/remove entries before finalising.</p>
+        <div class="actions" style="margin-bottom:16px;">
+          <button class="btn btn-ghost" id="genDeclBtn">Generate ingredient declaration</button>
+        </div>
+        <div class="error-box" id="declErrorBox"></div>
+        <div id="declOutput" style="display:none;">
+          <div id="declItemsList"></div>
+          <div class="actions" style="margin-top:10px; margin-bottom:4px;">
+            <button class="btn btn-ghost" id="addDeclItemBtn" style="font-size:12.5px; padding:8px 14px;">+ Add item</button>
+          </div>
+          <div class="decl-preview">
+            <div class="decl-preview-label">Ingredients statement — updates as you edit above</div>
+            <div id="declText"></div>
+          </div>
+          <div id="declContains" style="font-family:var(--font-mono); font-size:12px; margin-top:10px; color:var(--ink-soft);"></div>
+          <div id="declFlags" style="margin-top:16px;"></div>
+          <div class="nip-disclaimer" style="margin-top:16px;">⚠ This only flags allergens implied by the ingredient <em>names</em> you entered, and food additive code numbers are AI-suggested — verify every one against the FSANZ Food Additive Code list before publishing. It cannot see hidden or trace allergens from a supplier's manufacturing process, and it doesn't break down compound ingredients (e.g. a branded flavour that itself contains sub-ingredients) unless you list those sub-ingredients separately. Confirm against actual supplier allergen declarations before finalising.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="view-claims" style="display:none;">
+      <div class="eyebrow">Module 03 — Claims Review</div>
+      <h1>Can you actually say that on pack?</h1>
+      <p class="subtext">Type the claim you want to use — a nutrition claim, a health claim, or general marketing language. We'll tell you what kind of claim it is, what it takes to back it up, and whether it's even Food Standards Code territory.</p>
+
+      <div class="field" style="max-width:640px; margin-bottom:14px;">
+        <label>Claim you want to use</label>
+        <input type="text" id="claimInput" placeholder='e.g. "Low fat", "Supports immunity", "Natural", "Product of Australia"' style="width:100%; padding:11px 13px; border:1px solid var(--line); border-radius:7px; font-family:var(--font-body); font-size:14px; background:var(--surface);">
+      </div>
+
+      <div id="claimNipBanner" style="display:none; font-family:var(--font-mono); font-size:11.5px; color:var(--pass); background:var(--pass-bg); border:1px solid var(--pass); border-radius:7px; padding:10px 13px; margin-bottom:14px; max-width:640px;">
+        ✓ Found a calculated NIP from the NIP Calculator module — nutrition content claims will be checked against those numbers automatically.
+      </div>
+      <div id="claimNipMissing" style="display:none; font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); background:var(--surface); border:1px solid var(--line); border-radius:7px; padding:10px 13px; margin-bottom:14px; max-width:640px;">
+        No calculated NIP found yet. If this is a nutrition content claim (e.g. "low fat", "good source of fibre"), run the NIP Calculator first so we can check it against real numbers — otherwise we can only tell you the threshold, not whether you meet it.
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="checkClaimBtn">Check this claim</button>
+      </div>
+
+      <div class="error-box" id="claimErrorBox"></div>
+
+      <div id="claimOutput" style="display:none; margin-top:26px; max-width:640px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <span id="claimVerdictBadge" style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.04em; padding:5px 11px; border-radius:20px; text-transform:uppercase; font-weight:600;"></span>
+          <span id="claimTypeLabel" style="font-family:var(--font-mono); font-size:11px; color:var(--ink-soft);"></span>
+        </div>
+        <div class="finding" id="claimSummaryCard" style="border-left-width:3px;">
+          <div class="finding-title" id="claimSummaryTitle"></div>
+          <div class="finding-body" id="claimSummaryBody"></div>
+          <span class="finding-ref" id="claimSummaryRef"></span>
+        </div>
+        <div style="margin-top:16px;">
+          <div class="section-head" style="font-size:10.5px;">Next step</div>
+          <div style="font-size:13.5px; color:var(--ink-soft); line-height:1.55;" id="claimNextSteps"></div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <aside class="chat-panel" id="chatPanel">
+    <div class="chat-head">
+      <div class="chat-title"><span class="chat-title-dot"></span><span>Ask Remiew</span></div>
+      <button class="chat-toggle" id="chatToggle" title="Collapse">→</button>
+    </div>
+    <div class="chat-body-collapsed-icon" id="chatCollapsedIcon">ASK REMIEW</div>
+    <div class="chat-sub">General Q&amp;A on Australian label &amp; NIP rules — not a replacement for the calculators on the left, and not a substitute for QA sign-off.</div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg-empty" id="chatEmptyState">Ask things like "what counts as a mandatory allergen" or "when do I need country of origin labelling."</div>
+    </div>
+    <div class="chat-error" id="chatError" style="display:none;"></div>
+    <div class="chat-input-row">
+      <textarea id="chatInput" placeholder="Ask a question…" rows="1"></textarea>
+      <button class="chat-send" id="chatSend" title="Send">↑</button>
+    </div>
+  </aside>
+</div>
+
+<script src="js/mock-api.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/label-review.js"></script>
+<script src="js/nip-calculator.js"></script>
+<script src="js/claims-review.js"></script>
+</body>
+</html>
