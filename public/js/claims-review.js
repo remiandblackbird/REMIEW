@@ -25,7 +25,7 @@ document.getElementById('checkClaimBtn').addEventListener('click', async () => {
   const nip = window.lastNipResult;
 
   try{
-    const parsed = await RemiewMockAPI.checkClaim(claimText, nip);
+    const parsed = await RemiewAPI.checkClaim(claimText, nip);
 
     const style = VERDICT_STYLES[parsed.verdict] || VERDICT_STYLES.insufficient_info;
     const badge = document.getElementById('claimVerdictBadge');

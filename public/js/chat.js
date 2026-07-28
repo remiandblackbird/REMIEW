@@ -65,7 +65,7 @@ async function sendChatMessage(){
   chatMessages.scrollTop = chatMessages.scrollHeight;
 
   try{
-    const replyText = await RemiewMockAPI.chatReply(chatHistory, currentModuleLabel());
+    const replyText = await RemiewAPI.chatReply(chatHistory, currentModuleLabel());
     typingEl.remove();
     appendChatBubble('assistant', replyText);
     chatHistory.push({role:'assistant', content:replyText});

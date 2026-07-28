@@ -1,9 +1,14 @@
 {
   "name": "remiew-label-review-prototype",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Local, standalone version of the Remiew by Cactus label review prototype. Runs with mock AI data — no API key or backend required yet.",
+  "description": "Remiew by Cactus — Australian food label compliance prototype. A local Express backend keeps the Anthropic API key server-side and falls back to mock data automatically when no key is configured.",
   "scripts": {
     "start": "node server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest",
+    "dotenv": "latest",
+    "express": "latest"
   }
 }

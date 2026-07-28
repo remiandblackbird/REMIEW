@@ -1,45 +1,21 @@
-const http = require('http');
-const fs = require('fs');
+require('dotenv').config();
+const express = require('express');
 const path = require('path');
+const apiRoutes = require('./server/routes');
+const { hasApiKey, MODEL } = require('./server/anthropicClient');
 
+const app = express();
 const PORT = process.env.PORT || 3000;
-const ROOT = path.join(__dirname, 'public');
 
-const MIME = {
-  '.html': 'text/html; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.js': 'text/javascript; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon',
-};
+app.use(express.json({ limit: '20mb' }));
+app.use('/api', apiRoutes);
+app.use(express.static(path.join(__dirname, 'public')));
 
-const server = http.createServer((req, res) => {
-  let urlPath = decodeURIComponent(req.url.split('?')[0]);
-  if (urlPath === '/') urlPath = '/index.html';
-
-  const filePath = path.normalize(path.join(ROOT, urlPath));
-  if (!filePath.startsWith(ROOT)) {
-    res.writeHead(403);
-    res.end('Forbidden');
-    return;
+app.listen(PORT, () => {
+  console.log(`Remiew running at http://localhost:${PORT}`);
+  if (hasApiKey()) {
+    console.log(`AI mode: LIVE (model: ${MODEL})`);
+  } else {
+    console.log('AI mode: MOCK (no ANTHROPIC_API_KEY set in .env — using local mock responses)');
   }
-
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-      res.end('404 Not Found: ' + urlPath);
-      return;
-    }
-    const ext = path.extname(filePath);
-    res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
-    res.end(data);
-  });
-});
-
-server.listen(PORT, () => {
-  console.log(`Remiew prototype running at http://localhost:${PORT}`);
 });

@@ -1,5 +1,5 @@
 async function extractSpecFromFile(file){
-  return RemiewMockAPI.extractSpec(file);
+  return RemiewAPI.extractSpec(file);
 }
 
 const nipDropZone = document.getElementById('nipDropZone');
@@ -320,7 +320,7 @@ document.getElementById('genDeclBtn').addEventListener('click', async () => {
   btn.textContent = 'Checking…';
 
   try{
-    const parsed = await RemiewMockAPI.generateDeclaration(rows.map(r => r.name));
+    const parsed = await RemiewAPI.generateDeclaration(rows.map(r => r.name));
 
     declItems = (parsed.items||[]).map(item => {
       let display;

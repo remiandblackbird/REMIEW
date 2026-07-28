@@ -81,7 +81,7 @@ runBtn.addEventListener('click', async () => {
   const market = document.getElementById('marketSelect').value;
 
   try{
-    const parsed = await RemiewMockAPI.reviewLabel({ category, market, fileName: uploadedFile ? uploadedFile.name : '' });
+    const parsed = await RemiewAPI.reviewLabel({ category, market, fileName: uploadedFile ? uploadedFile.name : '', mediaType, base64Data });
     lastReport = parsed;
     clearInterval(stepTimer);
     setTimeout(() => renderReport(parsed), 400);

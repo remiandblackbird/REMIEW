@@ -1,12 +1,7 @@
 /*
- * Reference only — NOT loaded by the app.
- *
- * These are the exact system prompts the original Claude Artifact prototype
- * sent to the Anthropic Messages API (model "claude-sonnet-4-6") for each
- * feature, before this project was switched to mock data. Keep this file
- * for when you build a backend and want to wire up the real API again —
- * see README.md "Connecting the real AI later" for how to use them safely
- * (i.e. from a backend, never from frontend JS).
+ * The exact system prompts sent to the Anthropic Messages API for each
+ * feature. Used by server/routes.js — this is live server code now, not a
+ * reference file.
  */
 
 // Used by: Label Review → "Run review" button
