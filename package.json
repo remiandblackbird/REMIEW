@@ -2,7 +2,7 @@
   "name": "remiew-label-review-prototype",
   "version": "0.2.0",
   "private": true,
-  "description": "Remiew by Cactus — Australian food label compliance prototype. A local Express backend keeps the Anthropic API key server-side and falls back to mock data automatically when no key is configured.",
+  "description": "Remiew — Australian food label compliance prototype (Cactus Canning Workspace). A local Express backend keeps the Anthropic API key server-side and falls back to mock data automatically when no key is configured.",
   "scripts": {
     "start": "node server.js"
   },

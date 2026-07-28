@@ -291,6 +291,81 @@ body{
   padding:0 18px 10px;
 }
 
+/* Walking cactus mascot */
+.cactus-mascot{
+  position:fixed;
+  bottom:14px;
+  right:28px;
+  width:64px;
+  height:70px;
+  z-index:500;
+  pointer-events:none;
+}
+.cactus-mascot svg{
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+.cactus-shadow{
+  animation:shadowPulse 2.2s ease-in-out infinite;
+  transform-origin:32px 66px;
+}
+.cactus-rig{
+  animation:cactusWobble 2.2s ease-in-out infinite;
+  transform-origin:32px 58px;
+}
+.cactus-leg-left{
+  transform-origin:26px 52px;
+  animation:legWobbleLeft 2.2s ease-in-out infinite;
+}
+.cactus-leg-right{
+  transform-origin:38px 52px;
+  animation:legWobbleRight 2.2s ease-in-out infinite;
+}
+.cactus-arm-left{
+  transform-origin:19px 30px;
+  animation:armWobbleLeft 2.2s ease-in-out infinite;
+}
+.cactus-arm-right{
+  transform-origin:45px 26px;
+}
+.cactus-mug{
+  transform-origin:49px 24px;
+  animation:mugSway 2.2s ease-in-out infinite;
+}
+@keyframes cactusWobble{
+  0%{ transform:translate(0,0) rotate(-7deg); }
+  22%{ transform:translate(-2px,-1px) rotate(4deg); }
+  45%{ transform:translate(1px,1px) rotate(-9deg); }
+  68%{ transform:translate(-1px,-2px) rotate(3deg); }
+  85%{ transform:translate(2px,0) rotate(-5deg); }
+  100%{ transform:translate(0,0) rotate(-7deg); }
+}
+@keyframes shadowPulse{
+  0%,100%{ transform:scaleX(1) translateX(0); opacity:0.15; }
+  45%{ transform:scaleX(0.85) translateX(-3px); opacity:0.11; }
+  75%{ transform:scaleX(0.92) translateX(2px); opacity:0.12; }
+}
+@keyframes legWobbleLeft{
+  0%,100%{ transform:rotate(10deg); }
+  40%{ transform:rotate(-6deg); }
+  70%{ transform:rotate(14deg); }
+}
+@keyframes legWobbleRight{
+  0%,100%{ transform:rotate(-8deg); }
+  40%{ transform:rotate(12deg); }
+  70%{ transform:rotate(-4deg); }
+}
+@keyframes armWobbleLeft{
+  0%,100%{ transform:rotate(-20deg); }
+  50%{ transform:rotate(10deg); }
+}
+@keyframes mugSway{
+  0%,100%{ transform:rotate(-6deg); }
+  30%{ transform:rotate(14deg); }
+  60%{ transform:rotate(-10deg); }
+}
+
 .eyebrow{
   font-family:var(--font-mono);
   font-size:11px;

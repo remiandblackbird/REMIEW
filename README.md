@@ -1,4 +1,4 @@
-# Remiew by Cactus — Label Review (本地独立版)
+# Remiew — Label Review (Cactus Canning Workspace，本地独立版)
 
 这是从 Claude Artifact 原型迁移出来的**本地可运行版本**，现在已经接入了**真实的 Anthropic API**，通过一个小后端来调用，API key 只存在服务器端，不会出现在浏览器能看到的任何代码里。视觉设计、页面结构、交互行为都和原型保持一致。
 
